@@ -1,5 +1,5 @@
 <?php 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\v1;
 
 use Laravel\Lumen\Routing\Controller as BaseController;
 use App\User; //loads the User model
@@ -25,7 +25,7 @@ class UserController extends BaseController
      * @author Anil <anilprz3@gmail.com>
      * @version 1.0
      */
-    public function show()
+    public function show($id)
     {
     	return User::find($id);
     }
@@ -36,7 +36,7 @@ class UserController extends BaseController
      * @author Anil <anilprz3@gmail.com>
      * @version 1.0
      */
-    public function store()
+    public function store( Request $request )
     {
     	$this->validate($request, [
             'name' => 'sometimes',
@@ -44,7 +44,7 @@ class UserController extends BaseController
             'email'  => 'required|unique:users',
             'group' => 'sometimes',
             'password' => 'sometimes',
-            'token' => 'sometimes',
+            'remember_token' => 'sometimes',
             'active' => 'sometimes'
 	    ]); 
 	    $user   = new User;
@@ -53,7 +53,7 @@ class UserController extends BaseController
         $user->email  = $request->input('email');
         $user->group  = $request->input('group');
         $user->password  = Hash::make( $request->input('password') );
-        $user->token  = $request->input('token');
+        $user->remember_token  = $request->input('remember_token');
         $user->active  = $request->input('active');
 	    $user->save();
     }
@@ -64,14 +64,14 @@ class UserController extends BaseController
      * @author Anil <anilprz3@gmail.com>
      * @version 1.0
      */
-    public function update()
+    public function update( Request $request )
     {
     	$this->validate($request, [
 	        'name'  => 'required',
 	        'username' => 'required',
             'email'  => 'required',
             'password' => 'sometimes',
-            'token'  => 'sometimes',
+            'remember_token'  => 'sometimes',
 	        'active'  => 'required'
 	    ]); 
 	    $user    = User::find($id);
@@ -82,7 +82,7 @@ class UserController extends BaseController
 	    if($request->has('password')){
 	        $user->password = Hash::make( $request->input('password') );
 	    }
-        $user->token  = $request->input('token');
+        $user->remember_token  = $request->input('remember_token');
         $user->active  = $request->input('active');
 	    $user->save();
     }
@@ -93,7 +93,7 @@ class UserController extends BaseController
      * @author Anil <anilprz3@gmail.com>
      * @version 1.0
      */
-    public function destroy()
+    public function destroy( Request $request )
     {
     	$this->validate($request, [
 	        'id' => 'required|exists:users'

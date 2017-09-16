@@ -20,7 +20,7 @@ class CreateSurveyQaComments extends Migration
             $table->bigInteger('id_answer')->nullable();
             $table->bigInteger('id_survey_user')->nullable();
             $table->text('comment')->nullable();
-            $table->timestamp('created_at')->default('CURRENT_TIMESTAMP');
+            $table->timestamp('created_at')->useCurrent();
         });
     }
 

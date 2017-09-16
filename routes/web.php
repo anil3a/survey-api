@@ -11,12 +11,23 @@
 |
 */
 
-$router->get('/', function () use ($router) {
-    return view('index'); 
+
+$router->group(['prefix' => 'users/' ], function () use ($router) {
+
+	$router->get(		'/',		'v'. env('APP_VERSION', '1' ).'\UserController@index');  //get all users
+    $router->post(		'/',		'v'. env('APP_VERSION', '1' ).'\UserController@store');  //create users
+    $router->get(		'/{id}/', 	'v'. env('APP_VERSION', '1' ).'\UserController@show');   //get user detail
+    $router->put(		'/{id}/',	'v'. env('APP_VERSION', '1' ).'\UserController@update'); //update user
+    $router->delete(	'/{id}/',	'v'. env('APP_VERSION', '1' ).'\UserController@destroy');//delete user
+
 });
 
-$router->post('/create-user',      'UserController@store');
-$router->get('/read-users',        'UserController@index');
-$router->get('/read-user/{id}',    'UserController@show');
-$router->post('/edit-user/{id}', 'UserController@update');
-$router->post('/delete-user/{id}', 'UserController@destroy');
+$router->group(['prefix' => 'surveys/' ], function () use ($router) {
+
+	$router->get(		'/',		'v'. env('APP_VERSION', '1' ).'\SurveyController@index');  //get all users
+    $router->post(		'/',		'v'. env('APP_VERSION', '1' ).'\SurveyController@store');  //create users
+    $router->get(		'/{id}/', 	'v'. env('APP_VERSION', '1' ).'\SurveyController@show');   //get user detail
+    $router->put(		'/{id}/',	'v'. env('APP_VERSION', '1' ).'\SurveyController@update'); //update user
+    $router->delete(	'/{id}/',	'v'. env('APP_VERSION', '1' ).'\SurveyController@destroy');//delete user
+
+});
