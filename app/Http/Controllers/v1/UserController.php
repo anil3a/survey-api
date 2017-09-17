@@ -56,6 +56,8 @@ class UserController extends BaseController
         $user->remember_token  = $request->input('remember_token');
         $user->active  = $request->input('active');
 	    $user->save();
+
+        return response()->json( array( 'success' => true, 'data' => $user ), 200 );
     }
     
     /**
@@ -64,7 +66,7 @@ class UserController extends BaseController
      * @author Anil <anilprz3@gmail.com>
      * @version 1.0
      */
-    public function update( Request $request )
+    public function update( $id, Request $request )
     {
     	$this->validate($request, [
 	        'name'  => 'required',
@@ -85,6 +87,8 @@ class UserController extends BaseController
         $user->remember_token  = $request->input('remember_token');
         $user->active  = $request->input('active');
 	    $user->save();
+
+        return response()->json( array( 'success' => true, 'data' => $user ), 200 );
     }
 
     /**
@@ -100,5 +104,7 @@ class UserController extends BaseController
 	    ]);
 	    $user = User::find($request->input('id'));
 	    $user->delete();
+
+        return response()->json( array( 'success' => true, 'data' => $user ), 200 );
     }
 }

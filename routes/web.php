@@ -24,10 +24,10 @@ $router->group(['prefix' => 'users/' ], function () use ($router) {
 
 $router->group(['prefix' => 'surveys/' ], function () use ($router) {
 
-	$router->get(		'/',		'v'. env('APP_VERSION', '1' ).'\SurveyController@index');  //get all users
-    $router->post(		'/',		'v'. env('APP_VERSION', '1' ).'\SurveyController@store');  //create users
-    $router->get(		'/{id}/', 	'v'. env('APP_VERSION', '1' ).'\SurveyController@show');   //get user detail
-    $router->put(		'/{id}/',	'v'. env('APP_VERSION', '1' ).'\SurveyController@update'); //update user
-    $router->delete(	'/{id}/',	'v'. env('APP_VERSION', '1' ).'\SurveyController@destroy');//delete user
+	$router->get(		'/',		'v'. env('APP_VERSION', '1' ).'\SurveyController@index');  //get all surveys
+    $router->post(		'/',		'v'. env('APP_VERSION', '1' ).'\SurveyController@store');  //create surveys
+    $router->get(		'/{id}/', 	'v'. env('APP_VERSION', '1' ).'\SurveyController@show');   //get survey detail
+    $router->put(		'/{id}/',	'v'. env('APP_VERSION', '1' ).'\SurveyController@update'); //update survey
+    $router->delete(	'/{id}/',	'v'. env('APP_VERSION', '1' ).'\SurveyController@destroy');//delete survey
 
 });

@@ -31,7 +31,7 @@ class SurveyController extends BaseController
 
     /**
      * Insert new record to Survey table
-     * @return  void
+     * @return  JSON object
      * @author Anil <anilprz3@gmail.com>
      * @version 1.0
      */
@@ -55,6 +55,8 @@ class SurveyController extends BaseController
         $survey->extra  = $request->input('extra');
         $survey->active  = $request->input('active');
 	    $survey->save();
+
+        return response()->json( array( 'success' => true, 'data' => $survey ), 200 );
     }
     
     /**
@@ -63,7 +65,7 @@ class SurveyController extends BaseController
      * @author Anil <anilprz3@gmail.com>
      * @version 1.0
      */
-    public function update( Request $request )
+    public function update( $id, Request $request )
     {
     	$this->validate($request, [
 	        'name'  => 'required',
@@ -73,7 +75,7 @@ class SurveyController extends BaseController
             'no_of_question' => 'sometimes',
             'extra'  => 'sometimes',
 	        'active'  => 'sometimes'
-	    ]); 
+	    ]);
 	    $survey    = Survey::find($id);
         $survey->name  = $request->input('name');
         $survey->description  = $request->input('description');
@@ -83,6 +85,8 @@ class SurveyController extends BaseController
 	    $survey->extra  = $request->input('extra');
         $survey->active  = $request->input('active');
 	    $survey->save();
+
+        return response()->json( array( 'success' => true, 'data' => $survey ), 200 );
     }
 
     /**
@@ -91,12 +95,14 @@ class SurveyController extends BaseController
      * @author Anil <anilprz3@gmail.com>
      * @version 1.0
      */
-    public function destroy( Request $request )
+    public function destroy( $id, Request $request )
     {
     	$this->validate($request, [
 	        'id' => 'required|exists:surveys'
 	    ]);
 	    $survey = Survey::find($request->input('id'));
 	    $survey->delete();
+
+        return response()->json( array( 'success' => true, 'data' => $survey ), 200 );
     }
 }

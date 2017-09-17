@@ -1,8 +1,7 @@
 {
     "name": "laravel/lumen",
-    "description": "The Laravel Lumen Framework.",
-    "keywords": ["framework", "laravel", "lumen"],
-    "license": "MIT",
+    "description": "Survey API with laravel lumen",
+    "keywords": ["Survey", "api"],
     "type": "project",
     "require": {
         "php": ">=5.6.4",
