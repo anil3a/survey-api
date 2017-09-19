@@ -2,6 +2,11 @@
 
 This Survey Api is made with Laravel Lumen which is a stunningly fast PHP micro-framework for building web applications with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Lumen attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as routing, database abstraction, queueing, and caching.
 
+## Installation
+1. Clone repository using git
+2. Go inside repository directory "cd survey-api"
+3. Install dependencies using Composer "composer install"
+4. Setup Apache virtual host or directly server by "php -S localhost:8080 -t public"
 
 ## Test Case with Postman
 ### CRUD test cases
