@@ -3,3 +3,7 @@
 Homestead.json
 Homestead.yaml
 .env
+error.log
+composer.lock
+debug.log
+errorlog
