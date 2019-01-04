@@ -12,7 +12,7 @@
 */
 
 
-$router->group(['prefix' => 'users/' ], function () use ($router) {
+$router->group(['prefix' => 'user/' ], function () use ($router) {
 
 	$router->get(		'/',		'v'. env('APP_VERSION', '1' ).'\UserController@index');  //get all users
     $router->post(		'/',		'v'. env('APP_VERSION', '1' ).'\UserController@store');  //create users
@@ -22,7 +22,7 @@ $router->group(['prefix' => 'users/' ], function () use ($router) {
 
 });
 
-$router->group(['prefix' => 'surveys/' ], function () use ($router) {
+$router->group(['prefix' => 'survey/' ], function () use ($router) {
 
 	$router->get(		'/',		'v'. env('APP_VERSION', '1' ).'\SurveyController@index');  //get all surveys
     $router->post(		'/',		'v'. env('APP_VERSION', '1' ).'\SurveyController@store');  //create surveys

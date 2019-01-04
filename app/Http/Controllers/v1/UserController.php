@@ -16,7 +16,7 @@ class UserController extends BaseController
      */
     public function index()
     {
-    	return User::all();
+    	return response()->json( array( 'success' => true, 'data' => User::all(), 'message' => '' ), 200 );
     }
 
     /**
@@ -27,7 +27,18 @@ class UserController extends BaseController
      */
     public function show($id)
     {
-    	return User::find($id);
+        $user = [];
+        $message = '';
+        $success = false;
+        try{
+            $user = User::find($id);
+            $success = true;
+        } catch( Exception $e )
+        {
+            $message = $e->getMessage();
+            $success = false;
+        }
+        return response()->json( array( 'success' => $success, 'data' => $user, 'message' => $message ), 200 );
     }
 
     /**
@@ -38,26 +49,45 @@ class UserController extends BaseController
      */
     public function store( Request $request )
     {
-    	$this->validate($request, [
-            'name' => 'sometimes',
-	        'username' => 'required',
-            'email'  => 'required|unique:users',
-            'group' => 'sometimes',
-            'password' => 'sometimes',
-            'remember_token' => 'sometimes',
-            'active' => 'sometimes'
-	    ]); 
-	    $user   = new User;
-	    $user->name  = $request->input('name');
-	    $user->username  = $request->input('username');
-        $user->email  = $request->input('email');
-        $user->group  = $request->input('group');
-        $user->password  = Hash::make( $request->input('password') );
-        $user->remember_token  = $request->input('remember_token');
-        $user->active  = $request->input('active');
-	    $user->save();
-
-        return response()->json( array( 'success' => true, 'data' => $user ), 200 );
+        $message = '';
+        $success = false;
+        $user = [];
+        try{
+            $this->validate($request, [
+                'name' => 'sometimes',
+                'username' => 'required|unique:users',
+                'email'  => 'required|unique:users',
+                'group' => 'sometimes',
+                'password' => 'sometimes',
+                'remember_token' => 'sometimes',
+                'active' => 'sometimes'
+            ]);
+            $success = true;
+        } catch( \Illuminate\Validation\ValidationException $e )
+        {
+            $message = "Validation Error: ". $e->getMessage();
+            $success = false;
+        }
+        if( $success )
+        {
+           try{
+                $user   = new User;
+                $user->name  = $request->input('name');
+                $user->username  = $request->input('username');
+                $user->email  = $request->input('email');
+                $user->group  = $request->input('group');
+                $user->password  = Hash::make( $request->input('password') );
+                $user->remember_token  = $request->input('remember_token');
+                $user->active  = $request->input('active');
+                $user->save();
+                $success = true;
+            } catch( Exception $e )
+            {
+                $message = $e->getMessage();
+                $success = false;
+            }
+        }
+        return response()->json( array( 'success' => $success, 'data' => $user, 'message' => $message ), 200 );
     }
     
     /**
@@ -68,27 +98,61 @@ class UserController extends BaseController
      */
     public function update( $id, Request $request )
     {
-    	$this->validate($request, [
-	        'name'  => 'required',
-	        'username' => 'required',
-            'email'  => 'required',
-            'password' => 'sometimes',
-            'remember_token'  => 'sometimes',
-	        'active'  => 'required'
-	    ]); 
-	    $user    = User::find($id);
-        $user->name  = $request->input('name');
-        $user->username  = $request->input('username');
-	    $user->email   = $request->input('email');
-        $user->group  = $request->input('group');
-	    if($request->has('password')){
-	        $user->password = Hash::make( $request->input('password') );
-	    }
-        $user->remember_token  = $request->input('remember_token');
-        $user->active  = $request->input('active');
-	    $user->save();
-
-        return response()->json( array( 'success' => true, 'data' => $user ), 200 );
+        $message = '';
+        $success = false;
+        $user = [];        
+        try{
+            $this->validate($request, [
+                'name'  => 'sometimes',
+                'username' => 'sometimes',
+                'email'  => 'sometimes',
+                'password' => 'sometimes',
+                'remember_token'  => 'sometimes',
+                'active'  => 'sometimes'
+            ]);
+            $success = true;
+        } catch( \Illuminate\Validation\ValidationException $e )
+        {
+            $message = "Validation Error: ". $e->getMessage();
+            $success = false;
+        }
+        if( $success )
+        {
+            try{
+                $user    = User::find($id);
+                if( !empty( $request->all() ) )
+                {
+                    if($request->has('name')){
+                        $user->name  = $request->input('name');
+                    }
+                    if($request->has('username')){
+                        $user->username  = $request->input('username');
+                    }
+                    if($request->has('email')){
+                        $user->email   = $request->input('email');
+                    }
+                    if($request->has('group')){
+                        $user->group  = $request->input('group');
+                    }
+                    if($request->has('password')){
+                        $user->password = Hash::make( $request->input('password') );
+                    }
+                    if($request->has('remember_token')){
+                        $user->remember_token  = $request->input('remember_token');
+                    }
+                    if($request->has('active')){
+                        $user->active  = $request->input('active');
+                    }
+                    $user->save();
+                }
+                $success = true;
+            } catch( Exception $e )
+            {
+                $message = $e->getMessage();
+                $success = false;
+            }
+        }
+        return response()->json( array( 'success' => $success, 'data' => $user, 'message' => $message ), 200 );
     }
 
     /**
@@ -97,14 +161,41 @@ class UserController extends BaseController
      * @author Anil <anilprz3@gmail.com>
      * @version 1.0
      */
-    public function destroy( Request $request )
+    public function destroy( $id, Request $request )
     {
-    	$this->validate($request, [
-	        'id' => 'required|exists:users'
-	    ]);
-	    $user = User::find($request->input('id'));
-	    $user->delete();
+        $message = '';
+        $success = false;
+        $user = [];
 
-        return response()->json( array( 'success' => true, 'data' => $user ), 200 );
+        try{
+            $this->validate($request, [
+                'id' => 'required|exists:users'
+            ]);
+            $success = true;
+        } catch( \Illuminate\Validation\ValidationException $e )
+        {
+            $message = "Validation Error: ". $e->getMessage();
+            $success = false;
+        }
+        if( $success )
+        {
+            if( $request->has("id") && $request->input('id') === $id )
+            {
+                try{
+                    $user = User::find($request->input('id'));
+                    $user->delete();
+                    $success = true;
+                } catch( Exception $e )
+                {
+                    $message = $e->getMessage();
+                    $success = false;
+                }
+            }
+            else {
+                $success = false;
+                $message = "Data Error: The given data was invalid";
+            }
+        }
+        return response()->json( array( 'success' => $success, 'data' => $user, 'message' => $message ), 200 );
     }
 }
