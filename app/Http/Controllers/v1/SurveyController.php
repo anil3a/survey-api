@@ -91,18 +91,46 @@ class SurveyController extends BaseController
 
     /**
      * Delete Survey
-     * @return  [type] [description]
+     * @return  Object Json data
      * @author Anil <anilprz3@gmail.com>
      * @version 1.0
      */
     public function destroy( $id, Request $request )
     {
-    	$this->validate($request, [
-	        'id' => 'required|exists:surveys'
-	    ]);
-	    $survey = Survey::find($request->input('id'));
-	    $survey->delete();
+        $message = '';
+        $success = false;
+        $survey = [];
 
-        return response()->json( array( 'success' => true, 'data' => $survey ), 200 );
+        try{
+            $this->validate($request, [
+                'id' => 'required|exists:surveys'
+            ]);
+            $success = true;
+        } catch( \Illuminate\Validation\ValidationException $e )
+        {
+            $message = "Validation Error: ". $e->getMessage();
+            $success = false;
+        }
+        if( $success )
+        {
+            $success = false;
+            if( $request->has("id") && $request->input('id') === $id )
+            {
+                try{
+                    $survey = Survey::find($request->input('id'));
+                    $survey->delete();
+                    $success = true;
+                } catch( Exception $e )
+                {
+                    $message = $e->getMessage();
+                    $success = false;
+                }
+            }
+            else {
+                $success = false;
+                $message = "Data Error: The given data was invalid";
+            }
+        }
+        return response()->json( array( 'success' => $success, 'data' => $survey, 'message' => $message ), 200 );
     }
 }
