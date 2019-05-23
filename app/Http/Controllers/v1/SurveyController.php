@@ -67,26 +67,54 @@ class SurveyController extends BaseController
      */
     public function update( $id, Request $request )
     {
-    	$this->validate($request, [
-	        'name'  => 'required',
-	        'description' => 'sometimes',
-            'start_date' => 'sometimes',
-            'end_date'  => 'sometimes',
-            'no_of_question' => 'sometimes',
-            'extra'  => 'sometimes',
-	        'active'  => 'sometimes'
-	    ]);
-	    $survey    = Survey::find($id);
-        $survey->name  = $request->input('name');
-        $survey->description  = $request->input('description');
-	    $survey->start_date   = $request->input('start_date');
-        $survey->end_date  = $request->input('end_date');
-	    $survey->no_of_question = $request->input('no_of_question');
-	    $survey->extra  = $request->input('extra');
-        $survey->active  = $request->input('active');
-	    $survey->save();
+        $message = '';
+        $success = false;
+        $survey = [];
 
-        return response()->json( array( 'success' => true, 'data' => $survey ), 200 );
+        try{
+            $this->validate($request, [
+                'name'  => 'required',
+                'description' => 'sometimes',
+                'start_date' => 'sometimes',
+                'end_date'  => 'sometimes',
+                'no_of_question' => 'sometimes',
+                'extra'  => 'sometimes',
+                'active'  => 'sometimes'
+            ]);
+            $success = true;
+        } catch( \Illuminate\Validation\ValidationException $e )
+        {
+            $message = "Validation Error: ". $e->getMessage();
+            $success = false;
+        }
+        if( $success )
+        {
+            $success = false;
+            if( $request->has("id") && $request->input('id') === $id )
+            {
+                try{
+                    $survey    = Survey::find($id);
+                    $survey->name  = $request->input('name');
+                    $survey->description  = $request->input('description');
+                    $survey->start_date   = $request->input('start_date');
+                    $survey->end_date  = $request->input('end_date');
+                    $survey->no_of_question = $request->input('no_of_question');
+                    $survey->extra  = $request->input('extra');
+                    $survey->active  = $request->input('active');
+                    $survey->save();
+                    $success = true;
+                } catch( Exception $e )
+                {
+                    $message = $e->getMessage();
+                    $success = false;
+                }
+            }
+            else {
+                $success = false;
+                $message = "Data Error: The given data was invalid";
+            }
+        }
+        return response()->json( array( 'success' => $success, 'data' => $survey, 'message' => $message ), 200 );
     }
 
     /**
