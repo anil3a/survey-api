@@ -15,7 +15,7 @@ class SurveyController extends BaseController
      */
     public function index()
     {
-    	return Survey::all();
+    	return response()->json( array( 'success' => true, 'data' => Survey::all(), 'message' => '' ), 200 );
     }
 
     /**
@@ -26,7 +26,7 @@ class SurveyController extends BaseController
      */
     public function show($id)
     {
-    	return Survey::find($id);
+        return response()->json( array( 'success' => true, 'data' => Survey::find($id), 'message' => '' ), 200 );
     }
 
     /**
