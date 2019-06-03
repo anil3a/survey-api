@@ -7,7 +7,7 @@ This Survey Api is made with Laravel Lumen which is a stunningly fast PHP micro-
 2. Go inside repository directory "cd survey-api"
 3. Install dependencies using Composer "composer install"
 4. Setup database credentials in .env file from sample file .env.example
-4. Setup tables into your database running command `php artian migrate`
+4. Setup tables into your database running command `php artisan migrate`
 5. Setup Apache virtual host or directly server by "php -S localhost:8080 -t public"
 
 
