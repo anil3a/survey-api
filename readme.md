@@ -154,6 +154,3 @@ _Delete specific user from database_
 Please send me a pull request if you want to extend this module and have crazy thoughts.
 
 
-## License
-
-GPL
