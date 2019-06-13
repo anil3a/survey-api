@@ -26,7 +26,18 @@ class SurveyController extends BaseController
      */
     public function show($id)
     {
-        return response()->json( array( 'success' => true, 'data' => Survey::find($id), 'message' => '' ), 200 );
+        $survey = [];
+        $message = '';
+        $success = false;
+        try{
+            $survey = Survey::find($id);
+            $success = true;
+        } catch( Exception $e )
+        {
+            $message = $e->getMessage();
+            $success = false;
+        }
+        return response()->json( array( 'success' => $success, 'data' => $survey, 'message' => $message ), 200 );
     }
 
     /**
