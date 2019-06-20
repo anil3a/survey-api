@@ -9,6 +9,7 @@ This Survey Api is made with Laravel Lumen which is a stunningly fast PHP micro-
 4. Setup database credentials in .env file from sample file .env.example
 4. Setup tables into your database running command `php artisan migrate`
 5. Setup Apache virtual host or directly server by "php -S localhost:8080 -t public"
+6. Start your MySQL server to serve database.
 
 
 
@@ -115,17 +116,34 @@ _Delete specific user from database_
 
 ## Test Case with Postman
 ### CRUD test cases
+
+#### Surveys
 1. GET request usages (R)
-	eg: http://localhost:8080/surveys
+	eg: http://localhost:8080/survey
 
 2. POST request usages (C)
-	eg: http://localhost:8080/surveys?name=Are these helpful?&description=Analytics for customer satifaction.&start_date=2017-01-14&end_date=2017-12-28&no_of_question=0&extra&active=1
+	eg: http://localhost:8080/survey?name=Are these helpful?&description=Analytics for customer satifaction.&start_date=2017-01-14&end_date=2017-12-28&no_of_question=0&extra&active=1
 
 3. PUT request usages (U)
-	eg: http://localhost:8080/surveys?description=Analytics for customer satifaction.
+	eg: http://localhost:8080/survey?description=Analytics for customer satifaction.
 
 4. DELETE request usages (D)
-	eg: http://localhost:8080/surveys/2?id=2
+	eg: http://localhost:8080/survey/2?id=2
+
+
+#### Users
+1. GET request usages (R)
+	eg: http://localhost:8080/user
+
+2. POST request usages (C)
+	eg: http://localhost:8080/user?name=John&username=john123&email=john@example.com&group=team&password=1234567890&remember_token=0&active=1
+
+3. PUT request usages (U)
+	eg: http://localhost:8080/user?password=ER#31234qo0o
+
+4. DELETE request usages (D)
+	eg: http://localhost:8080/user/2?id=2
+
 
 
 
