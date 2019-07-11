@@ -165,6 +165,22 @@ _Delete specific user from database_
 | updated_at | DATETIME | System updated time |
 
 
+<a name="survey-object"></a>
+### Survey
+
+| Property | Type | Description |
+| --- | --- | --- |
+| id | INT | Survey ID |
+| name | STRING | Survey Name |
+| description | STRING | Survey Description |
+| start_date | STRING | Survey Start Date |
+| end_date | STRING | Survey End Date |
+| no_of_question | STRING | Number of questions in Survey |
+| extra | INT | Extra information about Survey |
+| active | INT | Active or unactive user |
+| created_at | DATETIME | System created time |
+| updated_at | DATETIME | System updated time |
+
 
 
 ## Contributors
