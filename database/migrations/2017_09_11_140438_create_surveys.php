@@ -19,7 +19,7 @@ class CreateSurveys extends Migration
             $table->text('description')->nullable();
             $table->dateTime('start_date')->nullable();
             $table->dateTime('end_date')->nullable();
-            $table->string('no_of_question', 5)->nullable();
+            $table->integer('no_of_question')->nullable();
             $table->string('extra', 500)->nullable();
             $table->boolean('active')->default(0);
             $table->timestamps();

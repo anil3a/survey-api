@@ -173,10 +173,10 @@ _Delete specific user from database_
 | id | INT | Survey ID |
 | name | STRING | Survey Name |
 | description | STRING | Survey Description |
-| start_date | STRING | Survey Start Date |
-| end_date | STRING | Survey End Date |
-| no_of_question | STRING | Number of questions in Survey |
-| extra | INT | Extra information about Survey |
+| start_date | DATETIME | Survey Start Date |
+| end_date | DATETIME | Survey End Date |
+| no_of_question | INT | Number of questions in Survey |
+| extra | STRING | Extra information about Survey |
 | active | INT | Active or unactive user |
 | created_at | DATETIME | System created time |
 | updated_at | DATETIME | System updated time |
